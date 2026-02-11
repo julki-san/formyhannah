@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Will you be my Valentine?</title>
+
+<!-- Confetti Library -->
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  background: linear-gradient(135deg, #f5e0ee, #d5aecb);
+  font-family: "Poppins", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  padding: 2rem;
+}
+
+.container {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  padding: 3rem;
+  border-radius: 20px;
+  background: white;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  overflow: hidden;
+}
+
+.img {
+  width: 100%;
+  max-height: 250px;
+  object-fit: contain;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+}
+
+.title {
+  font-size: 2.4rem;
+  font-weight: 600;
+  color: hotpink;
+  margin-bottom: 2rem;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  position: relative;
+}
+
+.btn {
+  padding: 1.2rem 2.5rem;
+  border: none;
+  border-radius: 30px;
+  font-size: 1.6rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+}
+
+.btn-yes {
+  background-color: #26953c;
+  color: white;
+}
+
+.btn-no {
+  background-color: rgb(166, 37, 82);
+  color: white;
+  position: relative;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 2rem;
+  }
+
+  .btn {
+    font-size: 1.4rem;
+    padding: 1rem 2rem;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<main class="container">
+  <img
+    class="img"
+    src="https://media.tenor.com/TUVAE2M_wz4AAAAi/chubby-tonton.gif"
+    alt="tonton"
+  />
+  <p class="title">Will you be my Valentine? pls pls HANNAH?💕</p>
+  <div class="buttons">
+    <button class="btn btn-yes">Yes</button>
+    <button class="btn btn-no">No</button>
+  </div>
+</main>
+
+<!-- Sound Effects -->
+<audio id="yesSound" src="https://assets.mixkit.co/active_storage/sfx/2019/2019-preview.mp3"></audio>
+<audio id="noSound">
+  <source src="https://assets.mixkit.co/active_storage/sfx/2180/2180-preview.mp3" type="audio/mpeg">
+</audio>
+<script>
+"use strict";
+
+const tontonGifs = [
+  "https://media.tenor.com/TUVAE2M_wz4AAAAi/chubby-tonton.gif",
+  "https://media.tenor.com/pZk_U5JVWzUAAAAi/tonton-friends-tonton.gif",
+  "https://media.tenor.com/Jkha__Yjf0oAAAAi/sad-depression.gif",
+  "https://media.tenor.com/U0OPHZokzkUAAAAi/what-seriously.gif",
+  "https://media.tenor.com/WKXMmSk3JJsAAAAi/chubby-tonton.gif"
+];
+
+const title = document.querySelector(".title");
+const btnContainer = document.querySelector(".buttons");
+const yesBtn = document.querySelector(".btn-yes");
+const noBtn = document.querySelector(".btn-no");
+const img = document.querySelector(".img");
+
+const yesSound = document.getElementById("yesSound");
+yesSound.volume = 0.4;
+let noCount = 0;
+let yesScale = 1;
+
+/* YES BUTTON */
+yesBtn.addEventListener("click", () => {
+  title.innerHTML = "YAYYY!! I LOVE YOU SO MUCH 💗🥰";
+  btnContainer.classList.add("hidden");
+
+  img.src =
+    "https://media.tenor.com/ACi1vdjNbpIAAAAi/%EC%9C%A0%ED%83%80-%ED%86%A4%ED%86%A4%ED%94%84%EB%A0%8C%EC%A6%88.gif";
+
+  yesSound.play();
+
+  confetti({
+    particleCount: 250,
+    spread: 120,
+    origin: { y: 0.6 }
+  });
+});
+        
+        const noSound = document.getElementById("noSound");
+noSound.volume = 0.4;
+
+/* NO BUTTON MOVES AROUND WHOLE SCREEN */
+noBtn.addEventListener("mouseover", moveButton);
+noBtn.addEventListener("touchstart", moveButton);
+
+function moveButton() {
+  noSound.play();
+  noCount++;
+
+  // Grow YES button
+  yesScale *= 1.15;
+  yesBtn.style.transform = `scale(${yesScale})`;
+
+  // Get viewport size
+  const maxX = window.innerWidth - noBtn.offsetWidth;
+  const maxY = window.innerHeight - noBtn.offsetHeight;
+
+  // Generate safe random position
+  const randomX = Math.random() * maxX;
+  const randomY = Math.random() * maxY;
+
+  // Make button fixed to viewport
+  noBtn.style.position = "fixed";
+  noBtn.style.left = randomX + "px";
+  noBtn.style.top = randomY + "px";
+
+  // Change image
+  img.src = tontonGifs[Math.min(noCount, tontonGifs.length - 1)];
+        
+const messages = [
+  // 🥺 Cute Sad (1–5)
+  "No 😔",
+  "Are you sure? 🥺",
+  "Really sure? 🥹",
+  "Pookie please 🥹",
+  "Don't do this 😭",
+
+  // 💔 Emotional (6–10)
+  "Wait... think again 😢",
+  "You’re making me nervous 🥺",
+  "My heart feels funny 😞",
+  "I don’t like this feeling 💔",
+  "It actually hurts a little 😔",
+
+  // 💔🔥 Dramatic Heartbreak (11–15)
+  "You’re breaking my heart 💔",
+  "I can hear it cracking... 💔",
+  "This is emotional damage 😭",
+  "My heart shattered into pieces 💔",
+  "Okay… I’ll cry in the corner forever 😭💔"
+];
+
+  noBtn.innerHTML = messages[Math.min(noCount, messages.length - 1)];
+}
+</script>
+</body>
+</html>
